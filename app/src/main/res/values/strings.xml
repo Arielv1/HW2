@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">HW2</string>
+    <string name="attack">attack</string>
+    <string name="start_game">Start Game</string>
+    <string name="roll_dice">Roll Dice</string>
+    <string name="new_game">New Game</string>
+    <string name="top_10">Top 10</string>
+</resources>

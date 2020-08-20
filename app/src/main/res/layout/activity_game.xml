@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity_Game">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            >
+
+            <ProgressBar
+                android:id="@+id/game_PB_p1_hp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
+                android:max="150"
+                android:progress="150"
+                />
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/alliance" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/game_LL_p1_buttons"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/game_BTN_p1_attack_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/attack"
+                android:enabled="false"
+                android:layout_marginTop="10dp"
+                />
+            <Button
+                android:id="@+id/game_BTN_p1_attack_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/attack"
+                android:enabled="false"
+                android:layout_marginTop="10dp"
+                />
+            <Button
+                android:id="@+id/game_BTN_p1_attack_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/attack"
+                android:enabled="false"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"/>
+
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/game_IV_dice_1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/dice_2"
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
+            android:visibility="invisible"/>
+        
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+            
+            <Button
+                android:id="@+id/game_BTN_roll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/roll_dice"
+                android:textSize="18sp"
+                android:background="@color/activeButton"
+                />
+
+
+        </LinearLayout>
+        
+        <ImageView
+            android:id="@+id/game_IV_dice_2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/dice_5"
+            android:layout_gravity="center"
+            android:layout_marginEnd="20dp"
+            android:visibility="invisible"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/game_BTN_p2_attack_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/attack"
+                android:layout_marginTop="10dp"
+                android:enabled="false"/>
+            <Button
+                android:id="@+id/game_BTN_p2_attack_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/attack"
+                android:layout_marginTop="10dp"
+                android:enabled="false"/>
+            <Button
+                android:id="@+id/game_BTN_p2_attack_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/attack"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:enabled="false"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:orientation="vertical"
+            android:gravity="center"
+            >
+
+            <ProgressBar
+                android:id="@+id/game_PB_p2_hp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
+                android:max="150"
+                android:progress="150"
+                />
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/horde"
+                />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
