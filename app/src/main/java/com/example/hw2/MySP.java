@@ -11,24 +11,33 @@ public class MySP {
 
 
     public interface KEYS {
+        public static final String SP_NAME = "MY_SP";
         public static final String NUM_OF_TURNS = "NUM_OF_TURNS";
         public static final String WINNER = "WINNER";
         public static final String LIST_OF_TOP_GAMES = "LIST_OF_TOP_GAMES";
         public static final String GAME_DETAILS = "GAME_DETAILS";
     }
 
-
+    private static MySP instance;
 
     private SharedPreferences prefs;
 
+    public static MySP initHelper(Context context) {
+        if (instance == null)
+            instance = new MySP(context);
+        return instance;
+    }
+
+    public static MySP getInstance() {
+        return instance;
+    }
+
     public MySP(Context context) {
-        prefs = context.getSharedPreferences("MY_SP", MODE_PRIVATE);
+        prefs = context.getSharedPreferences(KEYS.SP_NAME, MODE_PRIVATE);
     }
 
     public void putInt(String key, int value) {
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt(key, value);
-        editor.apply();
+        prefs.edit().putInt(key, value).apply();
     }
 
     public int getInt(String key, int def) {
@@ -36,9 +45,7 @@ public class MySP {
     }
 
     public void putString(String key, String value) {
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(key, value);
-        editor.apply();
+        prefs.edit().putString(key, value).apply();
     }
 
     public String getString(String key, String def) {
@@ -46,9 +53,7 @@ public class MySP {
     }
 
     public void putSetString(String key, Set<String> value){
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putStringSet(key, value);
-        editor.apply();
+        prefs.edit().putStringSet(key, value).apply();
     }
     public Set<String> getSetString(String key, Set<String> def){
         return prefs.getStringSet(key, def);

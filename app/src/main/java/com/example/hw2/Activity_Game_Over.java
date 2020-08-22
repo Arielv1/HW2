@@ -31,14 +31,14 @@
     private Button game_over_BTN_new_game;
     private Button game_over_BTN_top_10;
 
-    private MySP mySP;
+  //  private MySP mySP;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__game__over);
 
         setUpViews();
-        mySP = new MySP(this);
+    //    mySP = new MySP(this);
 
 
         Gson gson = new Gson();
@@ -57,7 +57,7 @@
 
         ArrayList<GameDetails> top_10 = new ArrayList<GameDetails>();
 
-        json = mySP.getString(MySP.KEYS.LIST_OF_TOP_GAMES,"");
+        json = MySP.getInstance().getString(MySP.KEYS.LIST_OF_TOP_GAMES,"");
 
         if(isFirstRecordedGame(json)) {
 
@@ -74,7 +74,7 @@
             topTenGames.setScores(games);
          }
          Log.d("TopTenGames", topTenGames.toString());
-         mySP.putString(MySP.KEYS.LIST_OF_TOP_GAMES, gson.toJson(topTenGames));
+         MySP.getInstance().putString(MySP.KEYS.LIST_OF_TOP_GAMES, gson.toJson(topTenGames));
 
         game_over_BTN_new_game.setOnClickListener(new View.OnClickListener() {
             @Override

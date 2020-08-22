@@ -1,5 +1,6 @@
 package com.example.hw2;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -11,14 +12,19 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Activity_Game extends AppCompatActivity {
 
@@ -26,6 +32,7 @@ public class Activity_Game extends AppCompatActivity {
     private ProgressBar game_PB_p2_hp;
 
     private Button game_BTN_roll;
+    private TextView game_LBL_timer;
 
     private Button game_BTN_p1_attack_1;
     private Button game_BTN_p1_attack_2;
@@ -48,18 +55,26 @@ public class Activity_Game extends AppCompatActivity {
     private ImageView game_IV_dice_1;
     private ImageView game_IV_dice_2;
 
-    private MySP mySP;
+   // private MySP mySP;
 
     private int player_turn;
     private int num_of_turns = 0;
+    private boolean timer_start = false;
+
+    private int timer_value = 1;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
+        Log.d("pttt", "onCreate");
         setUpViews();
-        mySP = new MySP(this);
+      //  mySP = new MySP(this);
       //mySP.putString(MySP.KEYS.LIST_OF_TOP_GAMES, "");
 
         game_BTN_roll.setOnClickListener(new View.OnClickListener() {
@@ -69,6 +84,7 @@ public class Activity_Game extends AppCompatActivity {
                 game_IV_dice_2.setVisibility(View.VISIBLE);
                 if (chooseStartingPlayer()) {
                     hideRollButton();
+                    timer_start = true;
                 }
             }
         });
@@ -76,26 +92,22 @@ public class Activity_Game extends AppCompatActivity {
         game_BTN_p1_attack_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 attack(HIGH_DAMAGE);
-
             }
         });
-
         game_BTN_p1_attack_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 attack(MEDIUM_DAMAGE);
             }
         });
-
-
         game_BTN_p1_attack_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 attack(LOW_DAMAGE);
             }
         });
+
         game_BTN_p2_attack_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,6 +130,68 @@ public class Activity_Game extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        Log.d("pttt", "onSaveInstanceState");
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        Log.d("pttt", "onRestoreInstanceState");
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onPause() {
+        Log.d("pttt", "onPause");
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        Log.d("pttt", "onResume");
+        super.onResume();
+    }
+
+    private Handler handler = new Handler();
+    private final int DELAY = 1000;
+
+    @Override
+    protected void onStart() {
+        Log.d("pttt", "onStart");
+        super.onStart();
+
+        handler.postDelayed(secondlyRun, DELAY);
+    }
+
+    @Override
+    protected void onStop() {
+        Log.d("pttt", "onStop");
+        super.onStop();
+
+        handler.removeCallbacks(secondlyRun);
+    }
+
+    @Override
+    protected void onDestroy() {
+        Log.d("pttt", "onDestroy");
+        super.onDestroy();
+    }
+
+    Runnable secondlyRun = new Runnable(){
+        public void run(){
+
+            game_LBL_timer.setText("" + timer_value);
+            MyToaster.getInstance().showToast("" + timer_value);
+
+            timer_value++;
+            if (timer_value <= 100) {
+                handler.postDelayed(this, DELAY);
+            }
+        }
+    };
+
 
 
     private void setUpViews() {
@@ -125,6 +199,8 @@ public class Activity_Game extends AppCompatActivity {
         game_PB_p1_hp = findViewById(R.id.game_PB_p1_hp);
         game_PB_p2_hp = findViewById(R.id.game_PB_p2_hp);
 
+        game_BTN_roll = findViewById(R.id.game_BTN_roll);
+        game_LBL_timer = findViewById(R.id.game_LBL_timer);
 
         game_BTN_p1_attack_1 = findViewById(R.id.game_BTN_p1_attack_1);
         game_BTN_p1_attack_2 = findViewById(R.id.game_BTN_p1_attack_2);
@@ -133,8 +209,6 @@ public class Activity_Game extends AppCompatActivity {
         game_BTN_p2_attack_1 = findViewById(R.id.game_BTN_p2_attack_1);
         game_BTN_p2_attack_2 = findViewById(R.id.game_BTN_p2_attack_2);
         game_BTN_p2_attack_3 = findViewById(R.id.game_BTN_p2_attack_3);
-
-        game_BTN_roll = findViewById(R.id.game_BTN_roll);
 
         game_IV_dice_1 = findViewById(R.id.game_IV_dice_1);
         game_IV_dice_2 = findViewById(R.id.game_IV_dice_2);
