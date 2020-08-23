@@ -63,6 +63,8 @@ public class Activity_Game extends AppCompatActivity {
 
     private int timer_value = 1;
 
+    Runnable secondlyRun;
+
 
 
 
@@ -82,9 +84,22 @@ public class Activity_Game extends AppCompatActivity {
             public void onClick(View v) {
                 game_IV_dice_1.setVisibility(View.VISIBLE);
                 game_IV_dice_2.setVisibility(View.VISIBLE);
+                Log.d("pttt", "game_BTN_roll Clicked");
+
                 if (chooseStartingPlayer()) {
+                    Log.d("pttt", "chooseStartingPlayer == true");
                     hideRollButton();
                     timer_start = true;
+                    secondlyRun = new Runnable(){
+                        public void run(){
+                            AutoTurn();
+                            timer_value++;
+                            if (timer_value <= 100) {
+                                handler.postDelayed(this, DELAY);
+                            }
+                        }
+                    };
+                    secondlyRun.run();
                 }
             }
         });
@@ -155,7 +170,7 @@ public class Activity_Game extends AppCompatActivity {
     }
 
     private Handler handler = new Handler();
-    private final int DELAY = 1000;
+    private final int DELAY = 5000;
 
     @Override
     protected void onStart() {
@@ -179,19 +194,38 @@ public class Activity_Game extends AppCompatActivity {
         super.onDestroy();
     }
 
-    Runnable secondlyRun = new Runnable(){
-        public void run(){
+//    Runnable secondlyRun = new Runnable(){
+//        public void run(){
+//
+////            game_LBL_timer.setText("" + timer_value);
+////            MyToaster.getInstance().showToast("" + timer_value);
+//            AutoTurn();
+//
+//            timer_value++;
+//            if (timer_value <= 100) {
+//                handler.postDelayed(this, DELAY);
+//            }
+//        }
+//    };
 
-            game_LBL_timer.setText("" + timer_value);
-            MyToaster.getInstance().showToast("" + timer_value);
+    private void AutoTurn() {
 
-            timer_value++;
-            if (timer_value <= 100) {
-                handler.postDelayed(this, DELAY);
-            }
+        Log.d("pttt", "AutoTurn called");
+        int attackButton = RANDOM.nextInt(3) + 1;
+        if (attackButton == 1)
+        {
+            attack(LOW_DAMAGE);
+
         }
-    };
-
+        else if(attackButton == 2)
+        {
+            attack(MEDIUM_DAMAGE);
+        }
+        else
+        {
+            attack(HIGH_DAMAGE);
+        }
+    }
 
 
     private void setUpViews() {
@@ -268,6 +302,7 @@ public class Activity_Game extends AppCompatActivity {
         /*
          TODO - ADD GPS LOCATION AND SEND IT TO THE INTENT
          */
+        handler.removeCallbacks(secondlyRun);
         Intent intent = new Intent(getApplicationContext(), Activity_Game_Over.class);
 
         GameDetails gameDetails = new GameDetails(player_turn, num_of_turns, 0, 0);
