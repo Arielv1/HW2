@@ -20,10 +20,10 @@
            />
 
         <Button
-            android:id="@+id/main_BTN_top_10"
+            android:id="@+id/main_BTN_leaderboard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/top_10"
+            android:text="@string/leaderboard"
             android:layout_marginTop="10dp"
             />
     </LinearLayout>

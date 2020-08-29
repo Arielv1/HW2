@@ -55,8 +55,6 @@ public class Activity_Game extends AppCompatActivity {
     private ImageView game_IV_dice_1;
     private ImageView game_IV_dice_2;
 
-   // private MySP mySP;
-
     private int player_turn;
     private int num_of_turns = 0;
     private boolean timer_start = false;
@@ -64,10 +62,18 @@ public class Activity_Game extends AppCompatActivity {
     private int timer_value = 1;
 
     Runnable secondlyRun;
+    private Handler handler = new Handler();
+    private final int DELAY = 1000;
 
+    private final int LOW = 1;
+    private final int MEDIUM = 2;
+    private final int HIGH = 3;
 
+    private final int LAT_UPPER_BOUND = 90;
+    private final int LAT_LOWER_BOUND = -90;
 
-
+    private final int LON_UPPER_BOUND = 180;
+    private final int LON_LOWER_BOUND = -180;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +82,6 @@ public class Activity_Game extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         Log.d("pttt", "onCreate");
         setUpViews();
-      //  mySP = new MySP(this);
-      //mySP.putString(MySP.KEYS.LIST_OF_TOP_GAMES, "");
 
         game_BTN_roll.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +98,8 @@ public class Activity_Game extends AppCompatActivity {
                         public void run(){
                             AutoTurn();
                             timer_value++;
-                            if (timer_value <= 100) {
+
+                            {
                                 handler.postDelayed(this, DELAY);
                             }
                         }
@@ -169,8 +174,7 @@ public class Activity_Game extends AppCompatActivity {
         super.onResume();
     }
 
-    private Handler handler = new Handler();
-    private final int DELAY = 5000;
+
 
     @Override
     protected void onStart() {
@@ -211,13 +215,13 @@ public class Activity_Game extends AppCompatActivity {
     private void AutoTurn() {
 
         Log.d("pttt", "AutoTurn called");
-        int attackButton = RANDOM.nextInt(3) + 1;
-        if (attackButton == 1)
+        int attackButton = RANDOM.nextInt(HIGH) + LOW;
+        if (attackButton == LOW)
         {
             attack(LOW_DAMAGE);
 
         }
-        else if(attackButton == 2)
+        else if(attackButton == MEDIUM)
         {
             attack(MEDIUM_DAMAGE);
         }
@@ -254,6 +258,10 @@ public class Activity_Game extends AppCompatActivity {
 
     private int rollDice() {
         return RANDOM.nextInt(6) + 1;
+    }
+
+    private double randomCoordinate (double upperBound, double lowerBound){
+        return (RANDOM.nextDouble() * upperBound) + lowerBound;
     }
 
     private boolean chooseStartingPlayer(){
@@ -305,7 +313,10 @@ public class Activity_Game extends AppCompatActivity {
         handler.removeCallbacks(secondlyRun);
         Intent intent = new Intent(getApplicationContext(), Activity_Game_Over.class);
 
-        GameDetails gameDetails = new GameDetails(player_turn, num_of_turns, 0, 0);
+        double lat = randomCoordinate(LAT_UPPER_BOUND, LAT_LOWER_BOUND);
+        double lon = randomCoordinate(LON_UPPER_BOUND, LON_LOWER_BOUND);
+
+        GameDetails gameDetails = new GameDetails(player_turn, num_of_turns, lat, lon);
         Gson gson = new Gson();
         String json = gson.toJson(gameDetails);
 

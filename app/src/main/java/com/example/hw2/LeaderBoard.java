@@ -2,13 +2,13 @@ package com.example.hw2;
 
 import java.util.ArrayList;
 
-public class TopTenGames {
+public class LeaderBoard {
     private ArrayList<GameDetails> scores;
 
-    public TopTenGames() {
+    public LeaderBoard() {
     }
 
-    public TopTenGames(ArrayList<GameDetails> scores) {
+    public LeaderBoard(ArrayList<GameDetails> scores) {
         this.scores = scores;
     }
 

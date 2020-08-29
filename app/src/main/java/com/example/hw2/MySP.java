@@ -15,7 +15,10 @@ public class MySP {
         public static final String NUM_OF_TURNS = "NUM_OF_TURNS";
         public static final String WINNER = "WINNER";
         public static final String LIST_OF_TOP_GAMES = "LIST_OF_TOP_GAMES";
-        public static final String GAME_DETAILS = "GAME_DETAILS";
+    }
+
+    public interface VALUES {
+        public static final String INITIAL_GAME_LIST = "";
     }
 
     private static MySP instance;

@@ -1,17 +1,18 @@
 package com.example.hw2;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Activity_Main extends AppCompatActivity {
 
 
     private Button main_BTN_start_game;
-    private Button main_BTN_top_10;
+    private Button main_BTN_leaderboard;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,17 +28,20 @@ public class Activity_Main extends AppCompatActivity {
             }
         });
 
-        main_BTN_top_10.setOnClickListener(new View.OnClickListener() {
+        main_BTN_leaderboard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), Activity_Top_10.class));
+                startActivity(new Intent(getApplicationContext(), Activity_LeaderBoard.class));
             }
         });
 
     }
 
+
+
     private void setUpViews() {
         main_BTN_start_game = findViewById(R.id.main_BTN_start_game);
-        main_BTN_top_10 = findViewById(R.id.main_BTN_top_10);
+        main_BTN_leaderboard = findViewById(R.id.main_BTN_leaderboard);
     }
+
 }

@@ -41,7 +41,7 @@
                 />
 
             <Button
-                android:id="@+id/game_over_BTN_top_10"
+                android:id="@+id/game_over_BTN_leaderboard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/top_10"

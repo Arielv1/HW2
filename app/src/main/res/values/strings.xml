@@ -5,4 +5,9 @@
     <string name="roll_dice">Roll Dice</string>
     <string name="new_game">New Game</string>
     <string name="top_10">Top 10</string>
+    <string name="player">Player</string>
+    <string name="num_turns_to_win">Num Turns To Win</string>
+    <string name="place">Place</string>
+    <string name="leaderboard">LeaderBoard</string>
+    <string name="map_key" translatable="false">AIzaSyB_qsP8AOP_P0MdlPz-48TDaJYjTP3vbjo</string>
 </resources>
