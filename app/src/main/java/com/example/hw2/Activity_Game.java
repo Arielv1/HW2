@@ -69,11 +69,14 @@ public class Activity_Game extends AppCompatActivity {
     private final int MEDIUM = 2;
     private final int HIGH = 3;
 
-    private final int LAT_UPPER_BOUND = 90;
-    private final int LAT_LOWER_BOUND = -90;
+    private final double LAT_UPPER_BOUND =  33.15;
+    private final double LAT_LOWER_BOUND = 29.29;
 
-    private final int LON_UPPER_BOUND = 180;
-    private final int LON_LOWER_BOUND = -180;
+    private final double LON_UPPER_BOUND = 35.30;
+    private final double LON_LOWER_BOUND = 34.50;
+
+    private final double LAT_BOUND = 32.07084;
+    private final double LON_BOUND = 35.191018;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -260,8 +263,15 @@ public class Activity_Game extends AppCompatActivity {
         return RANDOM.nextInt(6) + 1;
     }
 
-    private double randomCoordinate (double upperBound, double lowerBound){
-        return (RANDOM.nextDouble() * upperBound) + lowerBound;
+    /*private double randomCoordinate (double upperBound, double lowerBound){
+        return (RANDOM.nextDouble() * lowerBound) + (upperBound - lowerBound);
+    }*/
+
+    private double randomCoordinate (double bound){
+        double offset = RANDOM.nextDouble();
+        if (rollDice() >= 3)
+            offset *= -1;
+        return bound + offset;
     }
 
     private boolean chooseStartingPlayer(){
@@ -313,8 +323,11 @@ public class Activity_Game extends AppCompatActivity {
         handler.removeCallbacks(secondlyRun);
         Intent intent = new Intent(getApplicationContext(), Activity_Game_Over.class);
 
-        double lat = randomCoordinate(LAT_UPPER_BOUND, LAT_LOWER_BOUND);
-        double lon = randomCoordinate(LON_UPPER_BOUND, LON_LOWER_BOUND);
+        //double lat = randomCoordinate(LAT_UPPER_BOUND, LAT_LOWER_BOUND);
+        //double lon = randomCoordinate(LON_UPPER_BOUND, LON_LOWER_BOUND);
+
+        double lat = randomCoordinate(LAT_BOUND);
+        double lon = randomCoordinate(LON_BOUND);
 
         GameDetails gameDetails = new GameDetails(player_turn, num_of_turns, lat, lon);
         Gson gson = new Gson();

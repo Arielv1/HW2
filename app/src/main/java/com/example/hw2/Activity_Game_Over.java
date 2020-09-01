@@ -102,16 +102,6 @@ public class Activity_Game_Over extends AppCompatActivity  {
                 finish();
             }
         });
-
-        game_over_IV_winner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Activity_ShowMap.class);
-                intent.putExtra(Activity_ShowMap.LAT, gameDetails.getLat());
-                intent.putExtra(Activity_ShowMap.LON, gameDetails.getLon());
-                startActivity(intent);
-            }
-        });
     }
 
     private boolean isFirstRecordedGame(String jsonOfGame) {

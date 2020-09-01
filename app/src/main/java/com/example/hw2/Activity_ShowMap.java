@@ -22,6 +22,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.ArrayList;
+
 public class Activity_ShowMap extends AppCompatActivity implements OnMapReadyCallback  {
 
 
@@ -34,7 +36,7 @@ public class Activity_ShowMap extends AppCompatActivity implements OnMapReadyCal
 
     private double lat = 0 ;
     private double lon = 0 ;
-    private LatLng latLng ;
+    private LatLng[] latLng ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("ShowMapActivity", "onCreate");
@@ -45,9 +47,22 @@ public class Activity_ShowMap extends AppCompatActivity implements OnMapReadyCal
         lon = getIntent().getDoubleExtra(LON, 0);
 
         Log.d("ShowMapActivity", "lat " + lat + " lon " + lon);
-        latLng = new LatLng(lat, lon);
+        setLatLngForAllPlayers();
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         fetchLastLocation();
+    }
+
+    private void setLatLngForAllPlayers() {
+        ArrayList<GameDetails> games =  Activity_LeaderBoard.getAllGamesFromSP().getScores();
+        int numPlayers = games.size();
+
+        latLng = new LatLng[numPlayers];
+
+        for (int i = 0 ; i < numPlayers ; i++) {
+            GameDetails current = games.get(i);
+            latLng[i] = new LatLng(current.getLat(), current.getLon());
+        }
+
     }
 
     @Override
@@ -55,12 +70,15 @@ public class Activity_ShowMap extends AppCompatActivity implements OnMapReadyCal
         Log.d("ShowMapActivity", "onMapReady");
 
 
-        MarkerOptions markerOptions = new MarkerOptions()
-                .position(latLng).title("I am here")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-        googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 1));
-        googleMap.addMarker(markerOptions);
+        int numPlayers = Activity_LeaderBoard.getAllGamesFromSP().getScores().size();
+        for (int i = 0 ; i < numPlayers ; i++) {
+            MarkerOptions markerOptions = new MarkerOptions()
+                    .position(latLng[i]).title("Place #" + (i+1))
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+            googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng[i]));
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng[i], 8));
+            googleMap.addMarker(markerOptions);
+        }
     }
 
     @Override

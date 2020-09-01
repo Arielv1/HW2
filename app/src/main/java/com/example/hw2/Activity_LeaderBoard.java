@@ -1,8 +1,13 @@
 package com.example.hw2;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,17 +15,30 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-public class Activity_LeaderBoard extends AppCompatActivity {
+public class Activity_LeaderBoard extends AppCompatActivity  {
 
     public static final int SIZE = 10;
     private LinearLayout leaderboard_LL_layout;
     private final int TEXT_SIZE = 24;
     private Button btnResetLeaderBoard;
     private Button btnBackToMainMenu;
+    private Button btnShowPlayersLocation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +63,6 @@ public class Activity_LeaderBoard extends AppCompatActivity {
         setLeaderBoardButtons();
 
 
-
         btnResetLeaderBoard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,7 +78,14 @@ public class Activity_LeaderBoard extends AppCompatActivity {
             }
         });
 
+        btnShowPlayersLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), Activity_ShowMap.class));
+            }
+        });
     }
+
 
     private Button createNewWeightedButton(String btnName, int weight) {
         Button btn = new Button(this);
@@ -70,14 +94,21 @@ public class Activity_LeaderBoard extends AppCompatActivity {
         return btn;
     }
 
+    private LinearLayout addButtonsToLayout(LinearLayout layout, Button...btns){
+        for (Button btn : btns){
+            layout.addView(btn);
+        }
+        return layout;
+    }
+
     private void setLeaderBoardButtons() {
         LinearLayout btnLayout = new LinearLayout(this);
 
-        btnResetLeaderBoard = createNewWeightedButton("Reset LeaderBoard", 1);
-        btnBackToMainMenu = createNewWeightedButton("Back To Main Menu", 1);
+        btnResetLeaderBoard = createNewWeightedButton("Reset", 1);
+        btnBackToMainMenu = createNewWeightedButton("Back To Main Menu", 2);
+        btnShowPlayersLocation = createNewWeightedButton("Show Map", 2);
 
-        btnLayout.addView(btnBackToMainMenu);
-        btnLayout.addView(btnResetLeaderBoard);
+        btnLayout = addButtonsToLayout(btnLayout, btnBackToMainMenu, btnShowPlayersLocation, btnResetLeaderBoard);
 
         leaderboard_LL_layout.addView(btnLayout);
     }
@@ -119,7 +150,7 @@ public class Activity_LeaderBoard extends AppCompatActivity {
         }
     }
 
-    private LeaderBoard getAllGamesFromSP() {
+    public static LeaderBoard getAllGamesFromSP() {
 
         Gson gson = new Gson();
         String json = MySP.getInstance().getString(MySP.KEYS.LIST_OF_TOP_GAMES, MySP.VALUES.INITIAL_GAME_LIST);
@@ -132,6 +163,8 @@ public class Activity_LeaderBoard extends AppCompatActivity {
     }
 
     private void setUpViews() {
+
         leaderboard_LL_layout = findViewById(R.id.leaderboard_LL_layout);
     }
+
 }
