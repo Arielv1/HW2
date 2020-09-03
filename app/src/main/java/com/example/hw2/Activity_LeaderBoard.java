@@ -111,10 +111,10 @@ public class Activity_LeaderBoard extends AppCompatActivity  {
 
             ImageView playerImage = new ImageView(this);
             if(games.get(i).getWinning_player() == Activity_Game.PLAYER_ONE) {
-                playerImage.setImageResource(getResources().getIdentifier("alliance", "drawable", "com.example.hw2"));
+                playerImage.setImageResource(getResources().getIdentifier("ic_alliance", "drawable", "com.example.hw2"));
             }
             else {
-                playerImage.setImageResource(getResources().getIdentifier("horde", "drawable", "com.example.hw2"));
+                playerImage.setImageResource(getResources().getIdentifier("ic_horde", "drawable", "com.example.hw2"));
             }
 
             if (i < 9) {

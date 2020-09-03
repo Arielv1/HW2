@@ -42,9 +42,9 @@ public class Activity_Game_Over extends AppCompatActivity  {
         int player = gameDetails.getWinning_player();
         int num_of_turns = gameDetails.getNum_of_turns();
         if (player == Activity_Game.PLAYER_ONE) {
-            game_over_IV_winner.setImageResource(getResources().getIdentifier("alliance", "drawable", "com.example.hw2"));
+            game_over_IV_winner.setImageResource(getResources().getIdentifier("ic_alliance", "drawable", "com.example.hw2"));
         } else {
-            game_over_IV_winner.setImageResource(getResources().getIdentifier("horde", "drawable", "com.example.hw2"));
+            game_over_IV_winner.setImageResource(getResources().getIdentifier("ic_horde", "drawable", "com.example.hw2"));
         }
         game_over_LBL_winner_details.setText("The Winner Is Player #" + player + " With " + num_of_turns + " Turns");
 

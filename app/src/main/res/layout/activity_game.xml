@@ -29,7 +29,7 @@
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/alliance" />
+                android:src="@drawable/ic_alliance" />
 
 
         </LinearLayout>
@@ -73,11 +73,11 @@
             android:id="@+id/game_IV_dice_1"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/dice_2"
+            android:src="@drawable/ic_dice_2"
             android:layout_gravity="center"
             android:layout_marginStart="20dp"
             android:visibility="invisible"/>
-        
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -111,7 +111,7 @@
             android:id="@+id/game_IV_dice_2"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/dice_5"
+            android:src="@drawable/ic_dice_5"
             android:layout_gravity="center"
             android:layout_marginEnd="20dp"
             android:visibility="invisible"/>
@@ -169,7 +169,7 @@
             <ImageView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/horde"
+                android:src="@drawable/ic_horde"
                 />
         </LinearLayout>
 

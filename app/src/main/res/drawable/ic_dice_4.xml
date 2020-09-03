@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24.000000dp"
+    android:height="24.000000dp"
+    android:viewportWidth="130.000000"
+    android:viewportHeight="130.000000">
+
+    <group
+        android:translateY="130.000000"
+        android:scaleX="0.100000"
+        android:scaleY="-0.100000">
+        <path
+            android:fillColor="#000000"
+            android:strokeWidth="1"
+            android:pathData="M116 1290 c-41 -13 -94 -68 -106 -110 -13 -47 -13 -1014 0 -1059 13 -46 65 -99 110 -111 47 -13 1013 -13 1060 0 45 12 97 65 110 111 13 45 13 1012 0 1059 -12 45 -65 97 -111 110 -42 12 -1022 12 -1063 0z m1121 -53 l38 -37 0 -550 0 -550 -38 -37 -37 -38 -550 0 -550 0 -37 38 -38 37 0 550 0 549 30 31 c17 18 39 36 50 41 11 4 262 7 557 6 l538 -2 37 -38z" />
+        <path
+            android:fillColor="#E91E1E"
+            android:strokeWidth="1"
+            android:pathData="M236 1160 c-69 -21 -115 -103 -96 -169 34 -120 202 -137 254 -27 52 110 -45 230 -158 196z m112 -35 c61 -51 66 -132 13 -186 -77 -76 -212 -23 -211 84 1 23 6 52 14 65 34 63 130 82 184 37z" />
+        <path
+            android:fillColor="#E91E1E"
+            android:strokeWidth="1"
+            android:pathData="M986 1160 c-110 -34 -129 -189 -31 -250 92 -57 211 13 208 123 -1 84 -96 151 -177 127z m108 -29 c113 -75 42 -251 -90 -226 -74 13 -122 98 -94 165 31 74 120 103 184 61z" />
+        <path
+            android:fillColor="#E91E1E"
+            android:strokeWidth="1"
+            android:pathData="M203 390 c-119 -72 -68 -253 71 -253 105 0 168 108 118 202 -35 66 -125 90 -189 51z m146 -18 c33 -24 57 -89 47 -127 -4 -15 -22 -43 -41 -62 -27 -27 -40 -33 -76 -33 -78 1 -129 50 -129 125 0 101 117 158 199 97z" />
+        <path
+            android:fillColor="#E91E1E"
+            android:strokeWidth="1"
+            android:pathData="M961 392 c-123 -66 -74 -255 65 -255 76 0 137 61 137 137 0 105 -108 168 -202 118z m119 -7 c45 -23 70 -62 70 -109 0 -136 -173 -175 -236 -54 -52 101 65 215 166 163z" />
+    </group>
+</vector>

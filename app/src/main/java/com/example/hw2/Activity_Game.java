@@ -208,8 +208,8 @@ public class Activity_Game extends AppCompatActivity {
         int dice1 = rollDice();
         int dice2 = rollDice();
 
-        game_IV_dice_1.setImageResource(getResources().getIdentifier("dice_" + dice1, "drawable", "com.example.hw2"));
-        game_IV_dice_2.setImageResource(getResources().getIdentifier("dice_" + dice2, "drawable", "com.example.hw2"));
+        game_IV_dice_1.setImageResource(getResources().getIdentifier("ic_dice_" + dice1, "drawable", "com.example.hw2"));
+        game_IV_dice_2.setImageResource(getResources().getIdentifier("ic_dice_" + dice2, "drawable", "com.example.hw2"));
 
         if (dice1 > dice2) {
             enableButtons(game_BTN_p1_attack_1, game_BTN_p1_attack_2, game_BTN_p1_attack_3);

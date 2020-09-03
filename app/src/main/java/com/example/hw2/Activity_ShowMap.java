@@ -29,7 +29,7 @@ public class Activity_ShowMap extends AppCompatActivity implements OnMapReadyCal
 
     private Location location;
     private FusedLocationProviderClient fusedLocationProviderClient;
-    private static final int REQUEST_CODE = 101;
+    private static final int REQUEST_CODE = 1;
 
 
     private LatLng[] latLng ;
