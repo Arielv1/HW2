@@ -27,58 +27,61 @@ import java.util.ArrayList;
 public class Activity_ShowMap extends AppCompatActivity implements OnMapReadyCallback  {
 
 
-    private Location currentLocation;
+    private Location location;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private static final int REQUEST_CODE = 101;
 
-    public static final String LAT = "LAT";
-    public static final String LON = "LON";
 
-    private double lat = 0 ;
-    private double lon = 0 ;
     private LatLng[] latLng ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("ShowMapActivity", "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__show_map);
 
-        lat = getIntent().getDoubleExtra(LAT, 0);
-        lon = getIntent().getDoubleExtra(LON, 0);
-
-        Log.d("ShowMapActivity", "lat " + lat + " lon " + lon);
         setLatLngForAllPlayers();
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        fetchLastLocation();
+        showMapAndFocusOnLocation();
     }
 
     private void setLatLngForAllPlayers() {
-        ArrayList<GameDetails> games =  Activity_LeaderBoard.getAllGamesFromSP().getScores();
-        int numPlayers = games.size();
+        try {
+            ArrayList<GameDetails> games =  Activity_LeaderBoard.getAllGamesFromSP().getScores();
+            int numPlayers = games.size();
 
-        latLng = new LatLng[numPlayers];
+            latLng = new LatLng[numPlayers];
 
-        for (int i = 0 ; i < numPlayers ; i++) {
-            GameDetails current = games.get(i);
-            latLng[i] = new LatLng(current.getLat(), current.getLon());
+            for (int i = 0 ; i < numPlayers ; i++) {
+                GameDetails current = games.get(i);
+                latLng[i] = new LatLng(current.getLat(), current.getLon());
+            }
         }
+        catch (Exception e) {
+            latLng = new LatLng[0];
+            MyToaster.getInstance().showToast("No Players To Show On Map");
+        }
+
 
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        Log.d("ShowMapActivity", "onMapReady");
 
-
-        int numPlayers = Activity_LeaderBoard.getAllGamesFromSP().getScores().size();
+        int numPlayers;
+        try {
+            numPlayers = Activity_LeaderBoard.getAllGamesFromSP().getScores().size();
+            googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng[0]));
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng[0], 15));
+        }
+        catch (Exception e) {
+            numPlayers = 0;
+        }
         for (int i = 0 ; i < numPlayers ; i++) {
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(latLng[i]).title("Place #" + (i+1))
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-            googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng[i]));
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng[i], 8));
             googleMap.addMarker(markerOptions);
         }
+
     }
 
     @Override
@@ -86,7 +89,7 @@ public class Activity_ShowMap extends AppCompatActivity implements OnMapReadyCal
         switch (requestCode) {
             case REQUEST_CODE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    fetchLastLocation();
+                    showMapAndFocusOnLocation();
                 }
                 break;
             default:
@@ -94,18 +97,19 @@ public class Activity_ShowMap extends AppCompatActivity implements OnMapReadyCal
         }
     }
 
-    private void fetchLastLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+    private void showMapAndFocusOnLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        {
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
             return;
         }
         Task<Location> task = fusedLocationProviderClient.getLastLocation();
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
-            public void onSuccess(Location location) {
-                if (location != null) {
-                    currentLocation = location;
-                    MyToaster.getInstance().showToast(currentLocation.getLatitude() + " | " + currentLocation.getLongitude());
+            public void onSuccess(Location currentLocation) {
+                if (currentLocation != null) {
+                    location = currentLocation;
                     SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.show_map_FR_google_map);
                     supportMapFragment.getMapAsync(Activity_ShowMap.this);
                 }

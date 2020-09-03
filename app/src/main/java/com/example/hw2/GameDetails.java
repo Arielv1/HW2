@@ -12,6 +12,12 @@ public class GameDetails implements Comparable<GameDetails> {
     public GameDetails() {
     }
 
+    public GameDetails(int winning_player, int num_of_turns, double lat, double lon) {
+        this.winning_player = winning_player;
+        this.num_of_turns = num_of_turns;
+        this.lat = lat;
+        this.lon = lon;
+    }
 
     public int getWinning_player() {
         return winning_player;
@@ -33,15 +39,7 @@ public class GameDetails implements Comparable<GameDetails> {
         return lat;
     }
 
-    @Override
-    public String toString() {
-        return "GameDetails{" +
-                "winning_player=" + winning_player +
-                ", num_of_turns=" + num_of_turns +
-                ", lat=" + lat +
-                ", lon=" + lon +
-                '}';
-    }
+
 
     public void setLat(double lat) {
         this.lat = lat;
@@ -55,17 +53,19 @@ public class GameDetails implements Comparable<GameDetails> {
         this.lon = lon;
     }
 
-    public GameDetails(int winning_player, int num_of_turns, double lat, double lon) {
-        this.winning_player = winning_player;
-        this.num_of_turns = num_of_turns;
-        this.lat = lat;
-        this.lon = lon;
-    }
-
-
     @Override
     public int compareTo(GameDetails gameDetails) {
         return Integer.compare(this.getNum_of_turns(), gameDetails.getNum_of_turns());
 
+    }
+
+    @Override
+    public String toString() {
+        return "GameDetails{" +
+                "winning_player=" + winning_player +
+                ", num_of_turns=" + num_of_turns +
+                ", lat=" + lat +
+                ", lon=" + lon +
+                '}';
     }
 }

@@ -1,29 +1,13 @@
 package com.example.hw2;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
-
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -32,9 +16,7 @@ public class Activity_Game_Over extends AppCompatActivity  {
     public static final String WINNER = "WINNER";
     public static final String NUM_OF_TURNS = "NUM_OF_TURNS";
 
-
-
-    private LeaderBoard topTenGames;
+    private LeaderBoard leaderBoard;
 
     private TextView game_over_LBL_winner_details;
     private ImageView game_over_IV_winner;
@@ -43,15 +25,13 @@ public class Activity_Game_Over extends AppCompatActivity  {
     private Button game_over_BTN_leaderboard;
 
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__game__over);
 
         setUpViews();
+
 
 
         Gson gson = new Gson();
@@ -74,18 +54,17 @@ public class Activity_Game_Over extends AppCompatActivity  {
         if (isFirstRecordedGame(json)) {
 
             games.add(gameDetails);
-            topTenGames = new LeaderBoard(games);
-            Log.d("First Time", games.toString());
+            leaderBoard = new LeaderBoard(games);
         } else {
 
-            topTenGames = gson.fromJson(json, LeaderBoard.class);
-            games = topTenGames.getScores();
+            leaderBoard = gson.fromJson(json, LeaderBoard.class);
+            games = leaderBoard.getScores();
 
             addGameToTopTenGames(gameDetails);
-            topTenGames.setScores(games);
+            leaderBoard.setScores(games);
         }
-        Log.d("TopTenGames", topTenGames.toString());
-        MySP.getInstance().putString(MySP.KEYS.LIST_OF_TOP_GAMES, gson.toJson(topTenGames));
+
+        MySP.getInstance().putString(MySP.KEYS.LIST_OF_TOP_GAMES, gson.toJson(leaderBoard));
 
         game_over_BTN_new_game.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,12 +89,10 @@ public class Activity_Game_Over extends AppCompatActivity  {
     }
 
     private void addGameToTopTenGames(GameDetails gameDetails) {
-        ArrayList<GameDetails> games = topTenGames.getScores();
+        ArrayList<GameDetails> games = leaderBoard.getScores();
         games.add(gameDetails);
         Collections.sort(games);
 
-
-        Log.d("CHeck if", "reuslt of if is : " + (games.size() > Activity_LeaderBoard.SIZE));
         if (games.size() > Activity_LeaderBoard.SIZE) {
             GameDetails bestGame = games.get(0);
             int idx = 0;
@@ -128,7 +105,7 @@ public class Activity_Game_Over extends AppCompatActivity  {
             games.remove(idx);
         }
         Collections.sort(games);
-        topTenGames.setScores(games);
+        leaderBoard.setScores(games);
     }
 
     private void setUpViews() {

@@ -9,7 +9,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -33,11 +35,13 @@ import java.util.ArrayList;
 public class Activity_LeaderBoard extends AppCompatActivity  {
 
     public static final int SIZE = 10;
-    private LinearLayout leaderboard_LL_layout;
     private final int TEXT_SIZE = 24;
-    private Button btnResetLeaderBoard;
-    private Button btnBackToMainMenu;
-    private Button btnShowPlayersLocation;
+
+    private LinearLayout leaderboard_LL_best_players;
+
+    private Button leaderboard_BTN_reset;
+    private Button leaderboard_BTN_back_to_main_menu;
+    private Button leaderboard_BTN_show_map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +62,9 @@ public class Activity_LeaderBoard extends AppCompatActivity  {
             games = new ArrayList<GameDetails>();
         }
 
-        setLeaderBoardView(games);
+        showTopPlayers(games);
 
-        setLeaderBoardButtons();
-
-
-        btnResetLeaderBoard.setOnClickListener(new View.OnClickListener() {
+        leaderboard_BTN_reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 resetLeaderBoardSP();
@@ -71,14 +72,14 @@ public class Activity_LeaderBoard extends AppCompatActivity  {
             }
         });
 
-        btnBackToMainMenu.setOnClickListener(new View.OnClickListener() {
+        leaderboard_BTN_back_to_main_menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
 
-        btnShowPlayersLocation.setOnClickListener(new View.OnClickListener() {
+        leaderboard_BTN_show_map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), Activity_ShowMap.class));
@@ -87,66 +88,53 @@ public class Activity_LeaderBoard extends AppCompatActivity  {
     }
 
 
-    private Button createNewWeightedButton(String btnName, int weight) {
-        Button btn = new Button(this);
-        btn.setText(btnName);
-        btn.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, weight));
-        return btn;
+    private TextView createTextView(String text, int textSize) {
+        TextView textView = new TextView(this);
+        textView.setText(text);
+        textView.setTextSize(textSize);
+        return textView;
+
     }
 
-    private LinearLayout addButtonsToLayout(LinearLayout layout, Button...btns){
-        for (Button btn : btns){
-            layout.addView(btn);
+    private LinearLayout addViewsToLinearLayout (LinearLayout layout, View... views) {
+        for (View view : views) {
+            layout.addView(view);
         }
         return layout;
     }
 
-    private void setLeaderBoardButtons() {
-        LinearLayout btnLayout = new LinearLayout(this);
-
-        btnResetLeaderBoard = createNewWeightedButton("Reset", 1);
-        btnBackToMainMenu = createNewWeightedButton("Back To Main Menu", 2);
-        btnShowPlayersLocation = createNewWeightedButton("Show Map", 2);
-
-        btnLayout = addButtonsToLayout(btnLayout, btnBackToMainMenu, btnShowPlayersLocation, btnResetLeaderBoard);
-
-        leaderboard_LL_layout.addView(btnLayout);
-    }
-
-    private void setLeaderBoardView(ArrayList<GameDetails> games) {
+    private void showTopPlayers(ArrayList<GameDetails> games) {
 
         for (int i = 0 ; i < games.size(); i++) {
-            TextView tv = new TextView(this);
-            tv.setText("#" + (i+1));
-            tv.setTextSize(TEXT_SIZE);
 
-            ImageView iv = new ImageView(this);
+            TextView playerPlace = createTextView("#" + (i+1), TEXT_SIZE);
+
+            ImageView playerImage = new ImageView(this);
             if(games.get(i).getWinning_player() == Activity_Game.PLAYER_ONE) {
-                iv.setImageResource(getResources().getIdentifier("alliance", "drawable", "com.example.hw2"));
+                playerImage.setImageResource(getResources().getIdentifier("alliance", "drawable", "com.example.hw2"));
             }
             else {
-                iv.setImageResource(getResources().getIdentifier("horde", "drawable", "com.example.hw2"));
+                playerImage.setImageResource(getResources().getIdentifier("horde", "drawable", "com.example.hw2"));
             }
 
             if (i < 9) {
-                iv.setLayoutParams(new LinearLayout.LayoutParams(550, LinearLayout.LayoutParams.MATCH_PARENT));
+                playerImage.setLayoutParams(new LinearLayout.LayoutParams(550, 100));
             }
             else {
-                iv.setLayoutParams(new LinearLayout.LayoutParams(475, LinearLayout.LayoutParams.MATCH_PARENT));
+                playerImage.setLayoutParams(new LinearLayout.LayoutParams(510, 100));
+
             }
 
+            TextView numOfTurns = createTextView(games.get(i).getNum_of_turns() + "", TEXT_SIZE);
 
-            TextView tv2 = new TextView(this);
-            tv2.setText(games.get(i).getNum_of_turns() + "");
-            tv2.setTextSize(TEXT_SIZE);
+            numOfTurns.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            LinearLayout newPlayerRecordLayout = new LinearLayout(this);
 
+            newPlayerRecordLayout.setOrientation(LinearLayout.HORIZONTAL);
 
-            LinearLayout newLayout = new LinearLayout(this);
-            newLayout.setOrientation(LinearLayout.HORIZONTAL);
-            newLayout.addView(tv);
-            newLayout.addView(iv);
-            newLayout.addView(tv2);
-            leaderboard_LL_layout.addView(newLayout);
+            newPlayerRecordLayout = addViewsToLinearLayout(newPlayerRecordLayout, playerPlace, playerImage, numOfTurns);
+
+            leaderboard_LL_best_players.addView(newPlayerRecordLayout);
         }
     }
 
@@ -164,7 +152,11 @@ public class Activity_LeaderBoard extends AppCompatActivity  {
 
     private void setUpViews() {
 
-        leaderboard_LL_layout = findViewById(R.id.leaderboard_LL_layout);
+        leaderboard_BTN_reset = findViewById(R.id.leaderboard_BTN_reset);
+        leaderboard_BTN_show_map = findViewById(R.id.leaderboard_BTN_show_map);
+        leaderboard_BTN_back_to_main_menu = findViewById(R.id.leaderboard_BTN_back_to_main_menu);
+        leaderboard_LL_best_players = findViewById(R.id.leaderboard_LL_best_players);
+
     }
 
 }
