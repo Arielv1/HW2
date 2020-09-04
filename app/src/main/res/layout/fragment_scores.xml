@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/list"
+    android:name="com.example.hw2.ScoresListFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    app:layoutManager="LinearLayoutManager"
+    tools:listitem="@layout/fragment_list_scores_item"
+    />
+
+    <com.trendyol.bubblescrollbarlib.BubbleScrollBar
+        android:id="@+id/bubbleScrollBar"
+        android:layout_width="19dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:orientation="vertical"
+        app:bubbleElevation="6dp"
+        app:bubbleHeight="50dp"
+        app:bubbleMargin="4dp"
+        app:bubbleMinWidth="50dp"
+        app:bubblePadding="4dp"
+        app:bubbleTextColor="@color/default_bubble_text_color"
+        app:bubbleTextSize="8sp"
+        app:thumbBackground="@color/colorAccent" />
+    </FrameLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<androidx.recyclerview.widget.RecyclerView -->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:id="@+id/list"-->
+<!--    android:name="com.example.hw2.ScoresListFragment"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:layout_marginLeft="16dp"-->
+<!--    android:layout_marginRight="16dp"-->
+<!--    app:layoutManager="LinearLayoutManager"-->
+<!--    tools:context=".ScoresListFragment"-->
+<!--    tools:listitem="@layout/fragment_list_scores_item"-->
+<!--    />-->

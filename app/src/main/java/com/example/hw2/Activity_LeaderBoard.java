@@ -3,6 +3,7 @@ package com.example.hw2;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.content.Intent;
@@ -46,7 +47,8 @@ public class Activity_LeaderBoard extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity__leaderboard);
+//        setContentView(R.layout.activity__leaderboard);
+        setContentView(R.layout.activity__leaderboard_with_fragments);
 
         setUpViews();
 
@@ -62,7 +64,7 @@ public class Activity_LeaderBoard extends AppCompatActivity  {
             games = new ArrayList<GameDetails>();
         }
 
-        showTopPlayers(games);
+//        showTopPlayers(games);
 
         leaderboard_BTN_reset.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,6 +158,16 @@ public class Activity_LeaderBoard extends AppCompatActivity  {
         leaderboard_BTN_show_map = findViewById(R.id.leaderboard_BTN_show_map);
         leaderboard_BTN_back_to_main_menu = findViewById(R.id.leaderboard_BTN_back_to_main_menu);
         leaderboard_LL_best_players = findViewById(R.id.leaderboard_LL_best_players);
+
+        ScoresListFragment scoresListFragment = ScoresListFragment.newInstance();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.leaderboard_LYT_scores,scoresListFragment);
+        transaction.commit();
+
+        MapFragment mapFragment = MapFragment.newInstance();
+        FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
+        transaction2.replace(R.id.leaderboard_LYT_map,mapFragment);
+        transaction2.commit();
 
     }
 
