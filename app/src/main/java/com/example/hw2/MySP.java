@@ -9,16 +9,14 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class MySP {
 
-
     public interface KEYS {
         public static final String SP_NAME = "MY_SP";
-        public static final String NUM_OF_TURNS = "NUM_OF_TURNS";
-        public static final String WINNER = "WINNER";
         public static final String LIST_OF_TOP_GAMES = "LIST_OF_TOP_GAMES";
     }
 
     public interface VALUES {
         public static final String INITIAL_GAME_LIST = "";
+        public static final int SIZE = 10;
     }
 
     private static MySP instance;

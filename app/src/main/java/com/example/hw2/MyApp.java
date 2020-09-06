@@ -8,6 +8,7 @@ public class MyApp extends Application {
     public void onCreate() {
         super.onCreate();
 
+        Utils.initHelper(this);
         MyToaster.initHelper(this);
         MySP.initHelper(this);
 

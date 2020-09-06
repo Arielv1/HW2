@@ -36,10 +36,10 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         holder.m_num_of_turns.setText(""+game.getNum_of_turns());
         if(game.getWinning_player() == Activity_Game.PLAYER_ONE)
         {
-            holder.m_player_image.setImageResource(R.drawable.alliance);
+            holder.m_player_image.setImageResource(R.drawable.ic_alliance);
         }
         else {
-            holder.m_player_image.setImageResource(R.drawable.horde);
+            holder.m_player_image.setImageResource(R.drawable.ic_horde);
         }
         if (position < 9) {
             holder.m_player_image.setLayoutParams(new LinearLayout.LayoutParams(550, 100));

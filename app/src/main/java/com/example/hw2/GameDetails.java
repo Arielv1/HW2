@@ -39,8 +39,6 @@ public class GameDetails implements Comparable<GameDetails> {
         return lat;
     }
 
-
-
     public void setLat(double lat) {
         this.lat = lat;
     }

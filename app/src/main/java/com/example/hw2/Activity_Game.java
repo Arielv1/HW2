@@ -207,7 +207,6 @@ public class Activity_Game extends AppCompatActivity {
     private boolean chooseStartingPlayer(){
         int dice1 = rollDice();
         int dice2 = rollDice();
-
         game_IV_dice_1.setImageResource(getResources().getIdentifier("ic_dice_" + dice1, "drawable", "com.example.hw2"));
         game_IV_dice_2.setImageResource(getResources().getIdentifier("ic_dice_" + dice2, "drawable", "com.example.hw2"));
 

@@ -72,8 +72,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback  {
     }
 
     private void setLatLngForAllPlayers() {
-        try {
-            ArrayList<GameDetails> games =  Activity_LeaderBoard.getAllGamesFromSP().getScores();
+        ArrayList<GameDetails> games =  Utils.getInstance().getAllGamesFromSP();
+
+        if (games.size() != 0) {
             int numPlayers = games.size();
 
             latLng = new LatLng[numPlayers];
@@ -82,12 +83,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback  {
                 GameDetails current = games.get(i);
                 latLng[i] = new LatLng(current.getLat(), current.getLon());
             }
-        }
-        catch (Exception e) {
-            latLng = new LatLng[0];
+        } else {
             MyToaster.getInstance().showToast("No Players To Show On Map");
         }
-
 
     }
 
@@ -96,7 +94,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback  {
 
         int numPlayers;
         try {
-            numPlayers = Activity_LeaderBoard.getAllGamesFromSP().getScores().size();
+            numPlayers = Utils.getInstance().getAllGamesFromSP().size();
             googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng[0]));
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng[0], 13));
         }
@@ -138,7 +136,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback  {
             public void onSuccess(Location currentLocation) {
                 if (currentLocation != null) {
                     location = currentLocation;
-                     //SupportMapFragment supportMapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.fragment_map);
                     SupportMapFragment supportMapFragment = (SupportMapFragment)  getActivity().getSupportFragmentManager().findFragmentById(R.id.show_map_FR_google_map);
                     supportMapFragment.getMapAsync(MapFragment.this);
 

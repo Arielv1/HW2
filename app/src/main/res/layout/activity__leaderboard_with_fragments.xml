@@ -63,7 +63,7 @@
                 android:id="@+id/leaderboard_BTN_reset"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Reset"
+                android:text="Reset Leaderboard"
                 android:layout_weight="1"
                 />
 
@@ -75,12 +75,6 @@
                 android:layout_weight="1"
                 />
 
-            <Button
-                android:id="@+id/leaderboard_BTN_show_map"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Show Map"
-                android:layout_weight="1" />
             </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

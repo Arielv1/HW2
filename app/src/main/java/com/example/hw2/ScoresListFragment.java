@@ -22,10 +22,7 @@ import java.util.ArrayList;
 
 public class ScoresListFragment extends Fragment {
 
-    private LeaderBoard leaderBoard;
-    ArrayList<GameDetails> games;
-    BubbleScrollBar bubbleScrollBar;
-
+    private ArrayList<GameDetails> games;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -48,34 +45,18 @@ public class ScoresListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_scores, container, false);
-
-        LeaderBoard leaderBoard = getAllGamesFromSP();
-
-        try {
-            games = leaderBoard.getScores();
-        }
-        catch (Exception e) {
-            games = new ArrayList<GameDetails>();
-        }
-        Log.d("Scores", games.toString());
+        games = Utils.getInstance().getAllGamesFromSP();
         Context context = view.getContext();
-        RecyclerView recyclerView = view.findViewById(R.id.fragment_scores_LAY_recycler_view);
-        recyclerView.setHasFixedSize(true);
+        mRecyclerView = view.findViewById(R.id.fragment_scores_LAY_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(context);
         mAdapter = new MyItemRecyclerViewAdapter(games);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        recyclerView.setAdapter(new MyItemRecyclerViewAdapter(games));
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setAdapter(mAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
+        mRecyclerView.setAdapter(new MyItemRecyclerViewAdapter(games));
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mAdapter);
         return view;
-    }
-
-    public static LeaderBoard getAllGamesFromSP() {
-
-        Gson gson = new Gson();
-        String json = MySP.getInstance().getString(MySP.KEYS.LIST_OF_TOP_GAMES, MySP.VALUES.INITIAL_GAME_LIST);
-
-        return gson.fromJson(json, LeaderBoard.class);
     }
 }
