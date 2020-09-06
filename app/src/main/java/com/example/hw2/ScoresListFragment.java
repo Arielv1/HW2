@@ -8,10 +8,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.gson.Gson;
 import com.trendyol.bubblescrollbarlib.BubbleScrollBar;
 import com.trendyol.bubblescrollbarlib.BubbleTextProvider;
@@ -23,6 +25,11 @@ public class ScoresListFragment extends Fragment {
     private LeaderBoard leaderBoard;
     ArrayList<GameDetails> games;
     BubbleScrollBar bubbleScrollBar;
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+
 
     public ScoresListFragment() {
     }
@@ -36,6 +43,13 @@ public class ScoresListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_scores, container, false);
+
         LeaderBoard leaderBoard = getAllGamesFromSP();
 
         try {
@@ -44,28 +58,16 @@ public class ScoresListFragment extends Fragment {
         catch (Exception e) {
             games = new ArrayList<GameDetails>();
         }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_scores, container, false);
-
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            MyItemRecyclerViewAdapter myItemRecyclerViewAdapter = new MyItemRecyclerViewAdapter(games);
-//            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(games));
-            bubbleScrollBar.attachToRecyclerView(recyclerView);
-            bubbleScrollBar.setBubbleTextProvider(new BubbleTextProvider() {
-                @Override
-                public String provideBubbleText(int i) {
-                    return new StringBuilder(games.get(i).toString().substring(0,1)).toString();
-                }
-            });
-        }
+        Log.d("Scores", games.toString());
+        Context context = view.getContext();
+        RecyclerView recyclerView = view.findViewById(R.id.fragment_scores_LAY_recycler_view);
+        recyclerView.setHasFixedSize(true);
+        mLayoutManager = new LinearLayoutManager(context);
+        mAdapter = new MyItemRecyclerViewAdapter(games);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        recyclerView.setAdapter(new MyItemRecyclerViewAdapter(games));
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setAdapter(mAdapter);
         return view;
     }
 

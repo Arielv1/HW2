@@ -7,21 +7,21 @@
     android:padding="2dp"
     >
     <TextView
-        android:id="@+id/scores_LYT_index"
+        android:id="@+id/scores_LAY_place"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="index"
+        android:text="Place"
         android:textSize="24sp" />
 
     <ImageView
-        android:id="@+id/scores_LYT_image"
+        android:id="@+id/scores_LAY_image"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginStart="20dp"
         android:src="@drawable/ic_alliance" />
 
     <TextView
-        android:id="@+id/scores_LYT_num_of_turns"
+        android:id="@+id/scores_LAY_num_turns_to_win"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginStart="20dp"

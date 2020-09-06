@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -50,18 +52,22 @@ public class MapFragment extends Fragment implements OnMapReadyCallback  {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.d("fragment", "onCreate");
         super.onCreate(savedInstanceState);
 
-        setLatLngForAllPlayers();
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
-        showMapAndFocusOnLocation();
+
 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_map, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_map, null, false);
+        Log.d("fragment", "onCreateView");
+        SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.fragment_map_LAY_map);
+        mapFragment.getMapAsync(this);
+        setLatLngForAllPlayers();
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
+        //showMapAndFocusOnLocation();
         return view;
     }
 
@@ -92,7 +98,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback  {
         try {
             numPlayers = Activity_LeaderBoard.getAllGamesFromSP().getScores().size();
             googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng[0]));
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng[0], 15));
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng[0], 13));
         }
         catch (Exception e) {
             numPlayers = 0;
@@ -120,7 +126,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback  {
     }
 
     private void showMapAndFocusOnLocation() {
-        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
         {
             ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
@@ -132,9 +138,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback  {
             public void onSuccess(Location currentLocation) {
                 if (currentLocation != null) {
                     location = currentLocation;
-                     SupportMapFragment supportMapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.fragment_map);
-//                    SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.show_map_FR_google_map);
+                     //SupportMapFragment supportMapFragment = (SupportMapFragment) getFragmentManager().findFragmentById(R.id.fragment_map);
+                    SupportMapFragment supportMapFragment = (SupportMapFragment)  getActivity().getSupportFragmentManager().findFragmentById(R.id.show_map_FR_google_map);
                     supportMapFragment.getMapAsync(MapFragment.this);
+
                 }
             }
         });

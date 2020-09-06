@@ -110,8 +110,8 @@ public class Activity_ShowMap extends AppCompatActivity implements OnMapReadyCal
             public void onSuccess(Location currentLocation) {
                 if (currentLocation != null) {
                     location = currentLocation;
-                    SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.show_map_FR_google_map);
-                    supportMapFragment.getMapAsync(Activity_ShowMap.this);
+                    //SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.show_map_FR_google_map);
+                  //  supportMapFragment.getMapAsync(Activity_ShowMap.this);
                 }
             }
         });

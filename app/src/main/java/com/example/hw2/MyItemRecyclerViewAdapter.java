@@ -31,7 +31,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     public void onBindViewHolder(final ViewHolder holder, int position) {
 //        holder.mItem = mValues.get(position);
         GameDetails game = mValues.get(position);
-        holder.m_index.setText(""+(position+1));
+        holder.m_place.setText(""+(position+1));
 
         holder.m_num_of_turns.setText(""+game.getNum_of_turns());
         if(game.getWinning_player() == Activity_Game.PLAYER_ONE)
@@ -54,18 +54,18 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         return mValues.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public  View mView;
         public  TextView m_num_of_turns;
-        public  TextView m_index;
+        public  TextView m_place;
         public  ImageView m_player_image;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            m_num_of_turns = view.findViewById(R.id.scores_LYT_num_of_turns);
-            m_index = view.findViewById(R.id.scores_LYT_index);
-            m_player_image = view.findViewById(R.id.scores_LYT_image);
+            m_num_of_turns = view.findViewById(R.id.scores_LAY_num_turns_to_win);
+            m_place = view.findViewById(R.id.scores_LAY_place);
+            m_player_image = view.findViewById(R.id.scores_LAY_image);
         }
 
     }

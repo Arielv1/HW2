@@ -10,7 +10,7 @@
 
 
         <LinearLayout
-            android:id="@+id/leaderboard_LL_layout"
+            android:id="@+id/leaderboard_LAY_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -43,13 +43,11 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/leaderboard_LL_best_players"
+                android:id="@+id/leaderboard_LAY_best_players"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 >
-
-
 
             </LinearLayout>
 

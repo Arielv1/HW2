@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.text.Layout;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -38,7 +39,7 @@ public class Activity_LeaderBoard extends AppCompatActivity  {
     public static final int SIZE = 10;
     private final int TEXT_SIZE = 24;
 
-    private LinearLayout leaderboard_LL_best_players;
+    private LinearLayout leaderboard_LAY_best_players;
 
     private Button leaderboard_BTN_reset;
     private Button leaderboard_BTN_back_to_main_menu;
@@ -46,13 +47,13 @@ public class Activity_LeaderBoard extends AppCompatActivity  {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("fragment", "onCreate leaderboard");
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity__leaderboard);
         setContentView(R.layout.activity__leaderboard_with_fragments);
 
         setUpViews();
 
-        getAllGamesFromSP();
 
         LeaderBoard leaderBoard = getAllGamesFromSP();
 
@@ -136,7 +137,7 @@ public class Activity_LeaderBoard extends AppCompatActivity  {
 
             newPlayerRecordLayout = addViewsToLinearLayout(newPlayerRecordLayout, playerPlace, playerImage, numOfTurns);
 
-            leaderboard_LL_best_players.addView(newPlayerRecordLayout);
+            leaderboard_LAY_best_players.addView(newPlayerRecordLayout);
         }
     }
 
@@ -157,16 +158,16 @@ public class Activity_LeaderBoard extends AppCompatActivity  {
         leaderboard_BTN_reset = findViewById(R.id.leaderboard_BTN_reset);
         leaderboard_BTN_show_map = findViewById(R.id.leaderboard_BTN_show_map);
         leaderboard_BTN_back_to_main_menu = findViewById(R.id.leaderboard_BTN_back_to_main_menu);
-        leaderboard_LL_best_players = findViewById(R.id.leaderboard_LL_best_players);
+        leaderboard_LAY_best_players = findViewById(R.id.leaderboard_LAY_best_players);
 
         ScoresListFragment scoresListFragment = ScoresListFragment.newInstance();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.leaderboard_LYT_scores,scoresListFragment);
+        transaction.replace(R.id.leaderboard_LAY_scores,scoresListFragment);
         transaction.commit();
 
         MapFragment mapFragment = MapFragment.newInstance();
         FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
-        transaction2.replace(R.id.leaderboard_LYT_map,mapFragment);
+        transaction2.replace(R.id.leaderboard_LAY_map,mapFragment);
         transaction2.commit();
 
     }
