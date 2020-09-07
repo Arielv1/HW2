@@ -23,7 +23,8 @@
             android:name=".Activity_Game"
             android:screenOrientation="landscape" />
         <activity android:name=".Activity_Game_Over" />
-        <activity android:name=".Activity_LeaderBoard" />
+        <activity android:name=".Activity_LeaderBoard"
+            android:screenOrientation="portrait" />
         <activity android:name=".Activity_Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
