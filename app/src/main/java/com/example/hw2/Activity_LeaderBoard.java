@@ -1,38 +1,11 @@
 package com.example.hw2;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.Bundle;
-import android.text.Layout;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.gson.Gson;
-
-import java.util.ArrayList;
 
 public class Activity_LeaderBoard extends AppCompatActivity  {
 
@@ -42,7 +15,7 @@ public class Activity_LeaderBoard extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity__leaderboard_with_fragments);
+        setContentView(R.layout.activity__leaderboard);
 
         setUpViews();
         setUpFragments();
@@ -70,14 +43,14 @@ public class Activity_LeaderBoard extends AppCompatActivity  {
     }
 
     private void setUpFragments() {
-        ScoresListFragment scoresListFragment = ScoresListFragment.newInstance();
+        Fragment_Players_List scoresListFragment = Fragment_Players_List.newInstance();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.leaderboard_LAY_scores,scoresListFragment);
         transaction.commit();
 
-        MapFragment mapFragment = MapFragment.newInstance();
+        Fragment_Map fragmentMap = Fragment_Map.newInstance();
         FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
-        transaction2.replace(R.id.leaderboard_LAY_map,mapFragment);
+        transaction2.replace(R.id.leaderboard_LAY_map, fragmentMap);
         transaction2.commit();
     }
 

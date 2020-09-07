@@ -17,6 +17,8 @@ public class MySP {
     public interface VALUES {
         public static final String INITIAL_GAME_LIST = "";
         public static final int SIZE = 10;
+        public static final int PLAYER_ONE = 1;
+        public static final int PLAYER_TWO = 2;
     }
 
     private static MySP instance;

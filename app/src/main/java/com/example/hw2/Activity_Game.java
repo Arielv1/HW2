@@ -31,8 +31,6 @@ public class Activity_Game extends AppCompatActivity {
     private Button game_BTN_p2_attack_2;
     private Button game_BTN_p2_attack_3;
 
-    public static final int PLAYER_ONE = 1;
-    public static final int PLAYER_TWO = 2;
     public static final String GAME_DETAILS = "GAME_DETAILS";
 
     private final int HIGH_DAMAGE = 50;
@@ -212,12 +210,12 @@ public class Activity_Game extends AppCompatActivity {
 
         if (dice1 > dice2) {
             enableButtons(game_BTN_p1_attack_1, game_BTN_p1_attack_2, game_BTN_p1_attack_3);
-            player_turn = PLAYER_ONE;
+            player_turn = MySP.VALUES.PLAYER_ONE;
             return true;
         }
         else if (dice1 < dice2) {
             enableButtons(game_BTN_p2_attack_1, game_BTN_p2_attack_2, game_BTN_p2_attack_3);
-            player_turn = PLAYER_TWO;
+            player_turn = MySP.VALUES.PLAYER_TWO;
             return true;
         }
         return false;
@@ -248,7 +246,7 @@ public class Activity_Game extends AppCompatActivity {
     }
 
     private void switchPlayers() {
-        if(player_turn == PLAYER_ONE) {
+        if(player_turn == MySP.VALUES.PLAYER_ONE) {
             disableButtons(game_BTN_p1_attack_1, game_BTN_p1_attack_2, game_BTN_p1_attack_3);
             enableButtons(game_BTN_p2_attack_1, game_BTN_p2_attack_2, game_BTN_p2_attack_3);
         }
@@ -288,7 +286,7 @@ public class Activity_Game extends AppCompatActivity {
     }
 
     private void attack(int damage) {
-        if (player_turn == PLAYER_ONE) {
+        if (player_turn == MySP.VALUES.PLAYER_ONE) {
             game_PB_p2_hp.setProgress(game_PB_p2_hp.getProgress() - damage);
             lowHp(game_PB_p2_hp);
         }

@@ -1,7 +1,6 @@
 package com.example.hw2;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -13,9 +12,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -28,25 +24,24 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
 
-public class MapFragment extends Fragment implements OnMapReadyCallback  {
+public class Fragment_Map extends Fragment implements OnMapReadyCallback  {
 
     private Location location;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private static final int REQUEST_CODE = 1;
-
+    private final int ZOOM_VALUE = 14;
 
     private LatLng[] latLng ;
 
-    public MapFragment() {
+    public Fragment_Map() {
     }
 
-    public static MapFragment newInstance() {
-        MapFragment fragment = new MapFragment();
+    public static Fragment_Map newInstance() {
+        Fragment_Map fragment = new Fragment_Map();
         return fragment;
     }
 
@@ -96,7 +91,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback  {
         try {
             numPlayers = Utils.getInstance().getAllGamesFromSP().size();
             googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng[0]));
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng[0], 13));
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng[0], ZOOM_VALUE));
         }
         catch (Exception e) {
             numPlayers = 0;
@@ -137,7 +132,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback  {
                 if (currentLocation != null) {
                     location = currentLocation;
                     SupportMapFragment supportMapFragment = (SupportMapFragment)  getActivity().getSupportFragmentManager().findFragmentById(R.id.show_map_FR_google_map);
-                    supportMapFragment.getMapAsync(MapFragment.this);
+                    supportMapFragment.getMapAsync(Fragment_Map.this);
 
                 }
             }

@@ -4,23 +4,16 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.gson.Gson;
-import com.trendyol.bubblescrollbarlib.BubbleScrollBar;
-import com.trendyol.bubblescrollbarlib.BubbleTextProvider;
-
 import java.util.ArrayList;
 
-public class ScoresListFragment extends Fragment {
+public class Fragment_Players_List extends Fragment {
 
     private ArrayList<GameDetails> games;
     private RecyclerView mRecyclerView;
@@ -28,11 +21,11 @@ public class ScoresListFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
 
 
-    public ScoresListFragment() {
+    public Fragment_Players_List() {
     }
 
-    public static ScoresListFragment newInstance() {
-        ScoresListFragment fragment = new ScoresListFragment();
+    public static Fragment_Players_List newInstance() {
+        Fragment_Players_List fragment = new Fragment_Players_List();
         return fragment;
     }
 
@@ -46,17 +39,24 @@ public class ScoresListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_scores, container, false);
+        View view = inflater.inflate(R.layout.fragment_players_list, container, false);
+
         games = Utils.getInstance().getAllGamesFromSP();
+
         Context context = view.getContext();
+
         mRecyclerView = view.findViewById(R.id.fragment_scores_LAY_recycler_view);
         mRecyclerView.setHasFixedSize(true);
+
         mLayoutManager = new LinearLayoutManager(context);
-        mAdapter = new MyItemRecyclerViewAdapter(games);
+
+        mAdapter = new ItemRecyclerViewAdapter(games);
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-        mRecyclerView.setAdapter(new MyItemRecyclerViewAdapter(games));
+        mRecyclerView.setAdapter(new ItemRecyclerViewAdapter(games));
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+
         return view;
     }
 }

@@ -2,7 +2,6 @@ package com.example.hw2;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +11,18 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
+public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerViewAdapter.ViewHolder> {
 
     private final List<GameDetails> mValues;
 
-    public MyItemRecyclerViewAdapter(List<GameDetails> items) {
+    public ItemRecyclerViewAdapter(List<GameDetails> items) {
         mValues = items;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_list_scores_item, parent, false);
+                .inflate(R.layout.fragment_players_list_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -34,7 +33,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         holder.m_place.setText(""+(position+1));
 
         holder.m_num_of_turns.setText(""+game.getNum_of_turns());
-        if(game.getWinning_player() == Activity_Game.PLAYER_ONE)
+        if(game.getWinning_player() == MySP.VALUES.PLAYER_ONE)
         {
             holder.m_player_image.setImageResource(R.drawable.ic_alliance);
         }

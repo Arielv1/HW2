@@ -76,7 +76,7 @@ public class Activity_Game_Over extends AppCompatActivity  {
     private void displayWinnerDetails(GameDetails gameDetails) {
         int player = gameDetails.getWinning_player();
         int num_of_turns = gameDetails.getNum_of_turns();
-        if (player == Activity_Game.PLAYER_ONE) {
+        if (player == MySP.VALUES.PLAYER_ONE) {
             game_over_IV_winner.setImageResource(R.drawable.ic_alliance);
         } else {
             game_over_IV_winner.setImageResource(R.drawable.ic_horde);
