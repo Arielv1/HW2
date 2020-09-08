@@ -9,12 +9,12 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-import static android.content.Context.MODE_PRIVATE;
-
 public class Utils {
 
     private static Utils instance;
     private Context context;
+
+    public static final int REQUEST_CODE = 101;
 
 
     public static Utils initHelper(Context context) {

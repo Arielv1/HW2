@@ -1,7 +1,18 @@
 package com.example.hw2;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.gson.Gson;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -12,7 +23,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
+import java.util.List;
 import java.util.Random;
 
 public class Activity_Game extends AppCompatActivity {
@@ -31,8 +42,6 @@ public class Activity_Game extends AppCompatActivity {
     private Button game_BTN_p2_attack_2;
     private Button game_BTN_p2_attack_3;
 
-    public static final String GAME_DETAILS = "GAME_DETAILS";
-
     private final int HIGH_DAMAGE = 50;
     private final int MEDIUM_DAMAGE = 25;
     private final int LOW_DAMAGE = 10;
@@ -44,7 +53,6 @@ public class Activity_Game extends AppCompatActivity {
 
     private int player_turn;
     private int num_of_turns = 0;
-
 
     private int timer_value = 1;
 
@@ -59,15 +67,24 @@ public class Activity_Game extends AppCompatActivity {
     private final int DICE_UPPER_BOUND = 6;
     private final int DICE_LOWER_BOUND = 1;
 
-    private final double LAT_BOUND = 32.1149152;
-    private final double LON_BOUND = 34.8159152;
+    private FusedLocationProviderClient fusedLocationClient;
+    private Location location;
+    private LocationManager locationManager;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
         setUpViews();
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        getLastKnownLocation();
 
         game_BTN_roll.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,11 +161,6 @@ public class Activity_Game extends AppCompatActivity {
         handler.removeCallbacks(automaticGame);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
     private void AutoTurn() {
         int attackButton = RANDOM.nextInt(HIGH) + LOW;
         if (attackButton == LOW)
@@ -194,14 +206,7 @@ public class Activity_Game extends AppCompatActivity {
     private int rollDice() {
         return RANDOM.nextInt(DICE_UPPER_BOUND) + DICE_LOWER_BOUND;
     }
-
-    private double randomCoordinate (double bound){
-        double offset = RANDOM.nextDouble() / 100;
-        if (rollDice() >= DICE_UPPER_BOUND / 2)
-            offset *= -1;
-        return bound + offset;
-    }
-
+    
     private boolean chooseStartingPlayer(){
         int dice1 = rollDice();
         int dice2 = rollDice();
@@ -268,18 +273,17 @@ public class Activity_Game extends AppCompatActivity {
     }
 
     private void gameOver() {
-
         handler.removeCallbacks(automaticGame);
         Intent intent = new Intent(getApplicationContext(), Activity_Game_Over.class);
 
-        double lat = randomCoordinate(LAT_BOUND);
-        double lon = randomCoordinate(LON_BOUND);
+        double lat = location.getLatitude();
+        double lon = location.getLongitude();
 
         GameDetails gameDetails = new GameDetails(player_turn, num_of_turns, lat, lon);
         Gson gson = new Gson();
         String json = gson.toJson(gameDetails);
 
-        intent.putExtra(GAME_DETAILS,json);
+        intent.putExtra(MySP.KEYS.GAME_DETAILS,json);
         startActivity(intent);
         finish();
 
@@ -303,5 +307,36 @@ public class Activity_Game extends AppCompatActivity {
             switchPlayers();
         }
 
+    }
+
+    private void getLastKnownLocation() {
+        List<String> providers = locationManager.getProviders(true);
+        Location bestLocation = null;
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, Utils.REQUEST_CODE);
+            return;
+        }
+        final Task<Location> task = fusedLocationClient.getLastLocation();
+        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location currentLocation) {
+                if (currentLocation != null && task.isSuccessful() && task.getResult() != null) {
+                    location = currentLocation;
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case Utils.REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    getLastKnownLocation();
+                }
+                break;
+            default:
+                break;
+        }
     }
 }

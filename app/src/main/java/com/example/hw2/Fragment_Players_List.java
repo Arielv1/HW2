@@ -2,15 +2,12 @@ package com.example.hw2;
 
 import android.content.Context;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import java.util.ArrayList;
 
 public class Fragment_Players_List extends Fragment {
@@ -52,8 +49,6 @@ public class Fragment_Players_List extends Fragment {
 
         mAdapter = new ItemRecyclerViewAdapter(games);
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-        mRecyclerView.setAdapter(new ItemRecyclerViewAdapter(games));
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 

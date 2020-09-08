@@ -1,7 +1,6 @@
 package com.example.hw2;
 
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,13 +27,11 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-//        holder.mItem = mValues.get(position);
         GameDetails game = mValues.get(position);
-        holder.m_place.setText(""+(position+1));
+        holder.m_place.setText("#"+(position+1));
 
         holder.m_num_of_turns.setText(""+game.getNum_of_turns());
-        if(game.getWinning_player() == MySP.VALUES.PLAYER_ONE)
-        {
+        if(game.getWinning_player() == MySP.VALUES.PLAYER_ONE) {
             holder.m_player_image.setImageResource(R.drawable.ic_alliance);
         }
         else {

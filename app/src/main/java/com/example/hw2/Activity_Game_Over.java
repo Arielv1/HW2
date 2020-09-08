@@ -3,7 +3,6 @@ package com.example.hw2;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,12 +11,8 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Activity_Game_Over extends AppCompatActivity  {
 
-    public static final String WINNER = "WINNER";
-    public static final String NUM_OF_TURNS = "NUM_OF_TURNS";
-
-    private final int SIZE = 10;
+public class Activity_Game_Over extends AppCompatActivity {
 
     private LeaderBoard leaderBoard;
 
@@ -27,7 +22,6 @@ public class Activity_Game_Over extends AppCompatActivity  {
     private Button game_over_BTN_new_game;
     private Button game_over_BTN_leaderboard;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,12 +30,11 @@ public class Activity_Game_Over extends AppCompatActivity  {
         setUpViews();
 
         Gson gson = new Gson();
-        String json = getIntent().getStringExtra(Activity_Game.GAME_DETAILS);
+        String json = getIntent().getStringExtra(MySP.KEYS.GAME_DETAILS);
 
         final GameDetails gameDetails = gson.fromJson(json, GameDetails.class);
 
         displayWinnerDetails(gameDetails);
-
 
         ArrayList<GameDetails> games = new ArrayList<GameDetails>();
         json = MySP.getInstance().getString(MySP.KEYS.LIST_OF_TOP_GAMES, MySP.VALUES.INITIAL_GAME_LIST);
@@ -54,7 +47,8 @@ public class Activity_Game_Over extends AppCompatActivity  {
             addGameToLeaderBoard(gameDetails);
         }
 
-        MySP.getInstance().putString(MySP.KEYS.LIST_OF_TOP_GAMES, gson.toJson(leaderBoard));
+        updateListOfPlayersSP();
+
 
         game_over_BTN_new_game.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +66,16 @@ public class Activity_Game_Over extends AppCompatActivity  {
             }
         });
     }
+
+    private void setUpViews() {
+        game_over_LBL_winner_details = findViewById(R.id.game_over_LBL_winner_details);
+        game_over_IV_winner = findViewById(R.id.game_over_IV_winner);
+        game_over_BTN_new_game = findViewById(R.id.game_over_BTN_new_game);
+        game_over_BTN_leaderboard = findViewById(R.id.game_over_BTN_leaderboard);
+
+    }
+
+
 
     private void displayWinnerDetails(GameDetails gameDetails) {
         int player = gameDetails.getWinning_player();
@@ -95,7 +99,7 @@ public class Activity_Game_Over extends AppCompatActivity  {
         games.add(gameDetails);
         Collections.sort(games);
 
-        if (games.size() > SIZE) {
+        if (games.size() > MySP.VALUES.SIZE) {
             GameDetails bestGame = games.get(0);
             int idx = 0;
             for (int i = 1; i < games.size(); i++) {
@@ -110,13 +114,10 @@ public class Activity_Game_Over extends AppCompatActivity  {
         leaderBoard.setScores(games);
     }
 
-    private void setUpViews() {
-        game_over_LBL_winner_details = findViewById(R.id.game_over_LBL_winner_details);
-        game_over_IV_winner = findViewById(R.id.game_over_IV_winner);
-        game_over_BTN_new_game = findViewById(R.id.game_over_BTN_new_game);
-        game_over_BTN_leaderboard = findViewById(R.id.game_over_BTN_leaderboard);
 
+    private void updateListOfPlayersSP() {
+        Gson gson = new Gson();
+        MySP.getInstance().putString(MySP.KEYS.LIST_OF_TOP_GAMES, gson.toJson(leaderBoard));
     }
-
 
 }

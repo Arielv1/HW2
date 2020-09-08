@@ -1,7 +1,5 @@
 package com.example.hw2;
 
-import java.util.Comparator;
-
 public class GameDetails implements Comparable<GameDetails> {
 
     private int winning_player;

@@ -22,7 +22,7 @@ public class LeaderBoard {
 
     @Override
     public String toString() {
-        return "TopTenGames{" +
+        return "LeaderBoard{" +
                 "scores=" + scores +
                 '}';
     }

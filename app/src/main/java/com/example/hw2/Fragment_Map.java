@@ -4,15 +4,12 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -24,7 +21,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-
 import java.util.ArrayList;
 
 
@@ -32,8 +28,7 @@ public class Fragment_Map extends Fragment implements OnMapReadyCallback  {
 
     private Location location;
     private FusedLocationProviderClient fusedLocationProviderClient;
-    private static final int REQUEST_CODE = 1;
-    private final int ZOOM_VALUE = 14;
+    private final int ZOOM_VALUE = 13;
 
     private LatLng[] latLng ;
 
@@ -46,23 +41,14 @@ public class Fragment_Map extends Fragment implements OnMapReadyCallback  {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        Log.d("fragment", "onCreate");
-        super.onCreate(savedInstanceState);
-
-
-
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map, null, false);
-        Log.d("fragment", "onCreateView");
+
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.fragment_map_LAY_map);
         mapFragment.getMapAsync(this);
         setLatLngForAllPlayers();
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
-        //showMapAndFocusOnLocation();
+
         return view;
     }
 
@@ -108,7 +94,7 @@ public class Fragment_Map extends Fragment implements OnMapReadyCallback  {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
-            case REQUEST_CODE:
+            case Utils.REQUEST_CODE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     showMapAndFocusOnLocation();
                 }
@@ -120,9 +106,8 @@ public class Fragment_Map extends Fragment implements OnMapReadyCallback  {
 
     private void showMapAndFocusOnLocation() {
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-        {
-            ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
+                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)  {
+            ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, Utils.REQUEST_CODE);
             return;
         }
         Task<Location> task = fusedLocationProviderClient.getLastLocation();

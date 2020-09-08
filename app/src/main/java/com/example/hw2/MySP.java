@@ -11,6 +11,7 @@ public class MySP {
 
     public interface KEYS {
         public static final String SP_NAME = "MY_SP";
+        public static final String GAME_DETAILS = "GAME_DETAILS";
         public static final String LIST_OF_TOP_GAMES = "LIST_OF_TOP_GAMES";
     }
 
