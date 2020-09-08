@@ -15,8 +15,6 @@ public class Fragment_Players_List extends Fragment {
     private ArrayList<GameDetails> games;
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-
 
     public Fragment_Players_List() {
     }
@@ -38,18 +36,18 @@ public class Fragment_Players_List extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_players_list, container, false);
 
+        // Get all games to display for the leaderboard view
         games = Utils.getInstance().getAllGamesFromSP();
 
         Context context = view.getContext();
 
+        // Loads recycler view where the players details will be put
         mRecyclerView = view.findViewById(R.id.fragment_scores_LAY_recycler_view);
         mRecyclerView.setHasFixedSize(true);
 
-        mLayoutManager = new LinearLayoutManager(context);
-
+        // Creates the actual recycler view adapter
         mAdapter = new ItemRecyclerViewAdapter(games);
 
-        mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
         return view;

@@ -10,4 +10,5 @@
     <string name="place">Place</string>
     <string name="leaderboard">LeaderBoard</string>
     <string name="map_key" translatable="false">AIzaSyB_qsP8AOP_P0MdlPz-48TDaJYjTP3vbjo</string>
+    <string name="go_to_leaderboard">Go To LeaderBoard</string>
 </resources>

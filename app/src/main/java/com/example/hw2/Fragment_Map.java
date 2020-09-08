@@ -72,16 +72,20 @@ public class Fragment_Map extends Fragment implements OnMapReadyCallback  {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
+        // Get the number of players (markers) to display on the map
         int numPlayers;
         try {
             numPlayers = Utils.getInstance().getAllGamesFromSP().size();
+
+            // Focuses the camera onto the the best player (always the first)
             googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng[0]));
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng[0], ZOOM_VALUE));
         }
         catch (Exception e) {
             numPlayers = 0;
         }
+
+        // Display all the players locations as markers on the map
         for (int i = 0 ; i < numPlayers ; i++) {
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(latLng[i]).title("Place #" + (i+1))
@@ -93,34 +97,15 @@ public class Fragment_Map extends Fragment implements OnMapReadyCallback  {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        // Check permissions
         switch (requestCode) {
             case Utils.REQUEST_CODE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    showMapAndFocusOnLocation();
+                    setLatLngForAllPlayers();
                 }
                 break;
             default:
                 break;
         }
-    }
-
-    private void showMapAndFocusOnLocation() {
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)  {
-            ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, Utils.REQUEST_CODE);
-            return;
-        }
-        Task<Location> task = fusedLocationProviderClient.getLastLocation();
-        task.addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location currentLocation) {
-                if (currentLocation != null) {
-                    location = currentLocation;
-                    SupportMapFragment supportMapFragment = (SupportMapFragment)  getActivity().getSupportFragmentManager().findFragmentById(R.id.show_map_FR_google_map);
-                    supportMapFragment.getMapAsync(Fragment_Map.this);
-
-                }
-            }
-        });
     }
 }

@@ -71,9 +71,6 @@ public class Activity_Game extends AppCompatActivity {
     private Location location;
     private LocationManager locationManager;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -100,7 +97,6 @@ public class Activity_Game extends AppCompatActivity {
                             game_LBL_timer.setText(timer_value + "");
                             timer_value++;
                             handler.postDelayed(this, DELAY);
-
                         }
                     };
                     automaticGame.run();
@@ -206,7 +202,7 @@ public class Activity_Game extends AppCompatActivity {
     private int rollDice() {
         return RANDOM.nextInt(DICE_UPPER_BOUND) + DICE_LOWER_BOUND;
     }
-    
+
     private boolean chooseStartingPlayer(){
         int dice1 = rollDice();
         int dice2 = rollDice();

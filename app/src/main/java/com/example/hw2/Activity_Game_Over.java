@@ -29,16 +29,22 @@ public class Activity_Game_Over extends AppCompatActivity {
 
         setUpViews();
 
+        // Get the current GameDetails from Activity_Game
         Gson gson = new Gson();
         String json = getIntent().getStringExtra(MySP.KEYS.GAME_DETAILS);
 
         final GameDetails gameDetails = gson.fromJson(json, GameDetails.class);
 
+        // Display the winners' players' stats - image, num of turns, player numb
         displayWinnerDetails(gameDetails);
 
-        ArrayList<GameDetails> games = new ArrayList<GameDetails>();
+        // Get all the games details that are in the leaderboard in string format
+        // Will be empty for first time running or after resetting the leaderboard
         json = MySP.getInstance().getString(MySP.KEYS.LIST_OF_TOP_GAMES, MySP.VALUES.INITIAL_GAME_LIST);
+        ArrayList<GameDetails> games = new ArrayList<GameDetails>();
 
+        // If 'gameDetails' is the first game - add it to the leaderboard
+        // Otherwise need to decide it's place when comparing to all other games
         if (isFirstRecordedGame(json)) {
             games.add(gameDetails);
             leaderBoard = new LeaderBoard(games);
@@ -47,6 +53,7 @@ public class Activity_Game_Over extends AppCompatActivity {
             addGameToLeaderBoard(gameDetails);
         }
 
+        // Puts all the games details in SP (string format)
         updateListOfPlayersSP();
 
 
@@ -94,23 +101,27 @@ public class Activity_Game_Over extends AppCompatActivity {
     }
 
     private void addGameToLeaderBoard(GameDetails gameDetails) {
+        // Get the current leaderboard and all the games from SP
         leaderBoard = Utils.getInstance().getLeaderBoardFromSP();
         ArrayList<GameDetails> games = Utils.getInstance().getAllGamesFromSP();
+
+        // Adds the new game to the games list, sorts the list
+        // Afterwards decides which game to remove from the leaderboard if the list exceeds the SIZE
         games.add(gameDetails);
         Collections.sort(games);
 
         if (games.size() > MySP.VALUES.SIZE) {
-            GameDetails bestGame = games.get(0);
+            GameDetails bestGameToRemove = games.get(0);
             int idx = 0;
             for (int i = 1; i < games.size(); i++) {
-                if (games.get(i).getNum_of_turns() > bestGame.getNum_of_turns()) {
-                    bestGame = games.get(i);
+                if (games.get(i).getNum_of_turns() > bestGameToRemove.getNum_of_turns()) {
+                    bestGameToRemove = games.get(i);
                     idx = i;
                 }
             }
             games.remove(idx);
         }
-        Collections.sort(games);
+
         leaderBoard.setScores(games);
     }
 

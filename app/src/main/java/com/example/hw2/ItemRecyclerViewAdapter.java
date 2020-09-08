@@ -27,8 +27,10 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
+        // Get a currents' game position from the game list then prints its' data:
+        // Place in the leaderboard, image, number of turns it took to win
         GameDetails game = mValues.get(position);
-        holder.m_place.setText("#"+(position+1));
+        holder.m_place.setText(""+(position+1));
 
         holder.m_num_of_turns.setText(""+game.getNum_of_turns());
         if(game.getWinning_player() == MySP.VALUES.PLAYER_ONE) {
