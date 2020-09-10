@@ -105,22 +105,17 @@ public class Activity_Game_Over extends AppCompatActivity {
         leaderBoard = Utils.getInstance().getLeaderBoardFromSP();
         ArrayList<GameDetails> games = Utils.getInstance().getAllGamesFromSP();
 
-        // Adds the new game to the games list, sorts the list
-        // Afterwards decides which game to remove from the leaderboard if the list exceeds the SIZE
+        // Adds the new game to the games list, sorts the list by number of turns it took to win
         games.add(gameDetails);
         Collections.sort(games);
 
+        // If number of games exceeds the pre-determined size, remove the last game since it'll
+        // have the highest number of turns it took to win (result of the sort)
         if (games.size() > MySP.VALUES.SIZE) {
-            GameDetails bestGameToRemove = games.get(0);
-            int idx = 0;
-            for (int i = 1; i < games.size(); i++) {
-                if (games.get(i).getNum_of_turns() > bestGameToRemove.getNum_of_turns()) {
-                    bestGameToRemove = games.get(i);
-                    idx = i;
-                }
-            }
-            games.remove(idx);
+            games.remove(games.get(games.size() - 1));
+
         }
+
 
         leaderBoard.setScores(games);
     }
