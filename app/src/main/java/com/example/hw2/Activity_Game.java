@@ -210,12 +210,12 @@ public class Activity_Game extends AppCompatActivity {
         game_IV_dice_2.setImageResource(getResources().getIdentifier("ic_dice_" + dice2, "drawable", "com.example.hw2"));
 
         if (dice1 > dice2) {
-            enableButtons(game_BTN_p1_attack_1, game_BTN_p1_attack_2, game_BTN_p1_attack_3);
+            enableButtons(R.color.activeButton, game_BTN_p1_attack_1, game_BTN_p1_attack_2, game_BTN_p1_attack_3);
             player_turn = MySP.VALUES.PLAYER_ONE;
             return true;
         }
         else if (dice1 < dice2) {
-            enableButtons(game_BTN_p2_attack_1, game_BTN_p2_attack_2, game_BTN_p2_attack_3);
+            enableButtons(R.color.activeButton, game_BTN_p2_attack_1, game_BTN_p2_attack_2, game_BTN_p2_attack_3);
             player_turn = MySP.VALUES.PLAYER_TWO;
             return true;
         }
@@ -231,36 +231,35 @@ public class Activity_Game extends AppCompatActivity {
 
     }
 
-    private void enableButtons(Button... buttons) {
+    private void enableButtons(int color, Button... buttons) {
         for (Button btn : buttons) {
             btn.setEnabled(true);
-            btn.setBackgroundColor(getColor(R.color.activeButton));
+            btn.setBackgroundColor(getColor(color));
         }
     }
 
-    private void disableButtons(Button... buttons) {
+    private void disableButtons(int color, Button... buttons) {
         for (Button btn : buttons) {
             btn.setEnabled(false);
-            btn.setBackgroundColor(getColor(R.color.inactiveButton));
+            btn.setBackgroundColor(getColor(color));
 
         }
     }
 
     private void switchPlayers(int damage) {
         if (player_turn == MySP.VALUES.PLAYER_ONE) {
-            disableButtons(game_BTN_p1_attack_1, game_BTN_p1_attack_2, game_BTN_p1_attack_3);
-            enableButtons(game_BTN_p2_attack_1, game_BTN_p2_attack_2, game_BTN_p2_attack_3);
-
+            disableButtons(R.color.inactiveButton, game_BTN_p1_attack_1, game_BTN_p1_attack_2, game_BTN_p1_attack_3);
+            enableButtons(R.color.activeButton, game_BTN_p2_attack_1, game_BTN_p2_attack_2, game_BTN_p2_attack_3);
             // Colors the button that was used to attack with the color green to indicate it was pressed
             switch (damage) {
                 case LOW_DAMAGE:
-                    game_BTN_p1_attack_1.setBackgroundColor(getColor(R.color.wasPressedButton));
+                    enableButtons(R.color.wasPressedButton, game_BTN_p1_attack_1);
                     break;
                 case MEDIUM_DAMAGE:
-                    game_BTN_p1_attack_2.setBackgroundColor(getColor(R.color.wasPressedButton));
+                    enableButtons(R.color.wasPressedButton, game_BTN_p1_attack_2);
                     break;
                 case HIGH_DAMAGE:
-                    game_BTN_p1_attack_3.setBackgroundColor(getColor(R.color.wasPressedButton));
+                    enableButtons(R.color.wasPressedButton, game_BTN_p1_attack_3);
                     break;
                 default:
                     break;
@@ -268,19 +267,19 @@ public class Activity_Game extends AppCompatActivity {
 
         }
         else {
-                enableButtons(game_BTN_p1_attack_1, game_BTN_p1_attack_2, game_BTN_p1_attack_3);
-                disableButtons(game_BTN_p2_attack_1, game_BTN_p2_attack_2, game_BTN_p2_attack_3);
+                enableButtons(R.color.activeButton, game_BTN_p1_attack_1, game_BTN_p1_attack_2, game_BTN_p1_attack_3);
+                disableButtons(R.color.inactiveButton, game_BTN_p2_attack_1 ,game_BTN_p2_attack_2, game_BTN_p2_attack_3);
 
             // Colors the button that was used to attack with the color green to indicate it was pressed
                 switch (damage) {
                     case LOW_DAMAGE:
-                        game_BTN_p2_attack_1.setBackgroundColor(getColor(R.color.wasPressedButton));
+                        enableButtons(R.color.wasPressedButton, game_BTN_p2_attack_1);
                         break;
                     case MEDIUM_DAMAGE:
-                        game_BTN_p2_attack_2.setBackgroundColor(getColor(R.color.wasPressedButton));
+                        enableButtons(R.color.wasPressedButton, game_BTN_p2_attack_2);
                         break;
                     case HIGH_DAMAGE:
-                        game_BTN_p2_attack_3.setBackgroundColor(getColor(R.color.wasPressedButton));
+                        enableButtons(R.color.wasPressedButton, game_BTN_p2_attack_3);
                         break;
                     default:
                         break;
