@@ -246,14 +246,45 @@ public class Activity_Game extends AppCompatActivity {
         }
     }
 
-    private void switchPlayers() {
-        if(player_turn == MySP.VALUES.PLAYER_ONE) {
+    private void switchPlayers(int damage) {
+        if (player_turn == MySP.VALUES.PLAYER_ONE) {
             disableButtons(game_BTN_p1_attack_1, game_BTN_p1_attack_2, game_BTN_p1_attack_3);
             enableButtons(game_BTN_p2_attack_1, game_BTN_p2_attack_2, game_BTN_p2_attack_3);
+
+            // Colors the button that was used to attack with the color green to indicate it was pressed
+            switch (damage) {
+                case LOW_DAMAGE:
+                    game_BTN_p1_attack_1.setBackgroundColor(getColor(R.color.wasPressedButton));
+                    break;
+                case MEDIUM_DAMAGE:
+                    game_BTN_p1_attack_2.setBackgroundColor(getColor(R.color.wasPressedButton));
+                    break;
+                case HIGH_DAMAGE:
+                    game_BTN_p1_attack_3.setBackgroundColor(getColor(R.color.wasPressedButton));
+                    break;
+                default:
+                    break;
+            }
+
         }
         else {
-            disableButtons(game_BTN_p2_attack_1, game_BTN_p2_attack_2, game_BTN_p2_attack_3);
-            enableButtons(game_BTN_p1_attack_1, game_BTN_p1_attack_2, game_BTN_p1_attack_3);
+                enableButtons(game_BTN_p1_attack_1, game_BTN_p1_attack_2, game_BTN_p1_attack_3);
+                disableButtons(game_BTN_p2_attack_1, game_BTN_p2_attack_2, game_BTN_p2_attack_3);
+
+            // Colors the button that was used to attack with the color green to indicate it was pressed
+                switch (damage) {
+                    case LOW_DAMAGE:
+                        game_BTN_p2_attack_1.setBackgroundColor(getColor(R.color.wasPressedButton));
+                        break;
+                    case MEDIUM_DAMAGE:
+                        game_BTN_p2_attack_2.setBackgroundColor(getColor(R.color.wasPressedButton));
+                        break;
+                    case HIGH_DAMAGE:
+                        game_BTN_p2_attack_3.setBackgroundColor(getColor(R.color.wasPressedButton));
+                        break;
+                    default:
+                        break;
+                }
         }
         player_turn = (player_turn % 2) + 1;
     }
@@ -286,11 +317,12 @@ public class Activity_Game extends AppCompatActivity {
     }
 
     private void attack(int damage) {
-        if (player_turn == MySP.VALUES.PLAYER_ONE) {
+
+        if (player_turn == MySP.VALUES.PLAYER_ONE){
             game_PB_p2_hp.setProgress(game_PB_p2_hp.getProgress() - damage);
             lowHp(game_PB_p2_hp);
         }
-        else {
+        else{
             game_PB_p1_hp.setProgress(game_PB_p1_hp.getProgress() - damage);
             lowHp(game_PB_p1_hp);
 
@@ -300,7 +332,7 @@ public class Activity_Game extends AppCompatActivity {
             gameOver();
         }
         else {
-            switchPlayers();
+            switchPlayers(damage);
         }
 
     }

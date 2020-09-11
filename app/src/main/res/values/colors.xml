@@ -5,4 +5,5 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="activeButton">#005EFF</color>
     <color name="inactiveButton">#C3BCBC</color>
+    <color name="wasPressedButton">#38E851</color>
 </resources>
